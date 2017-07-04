@@ -7,6 +7,9 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     public final static int REQUEST_CODE = 10101;
@@ -17,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         if (checkDrawOverlayPermission()) {
             startService(new Intent(this, PowerButtonService.class));
         }
+
     }
 
     public boolean checkDrawOverlayPermission() {
@@ -43,5 +47,19 @@ public class MainActivity extends AppCompatActivity {
                 startService(new Intent(this, PowerButtonService.class));
             }
         }
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK
+                || event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP
+                || event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_DOWN
+                || event.getKeyCode() == KeyEvent.KEYCODE_CAMERA
+                || event.getKeyCode() == KeyEvent.KEYCODE_POWER) {
+            Log.i("Key", "keycode " + event.getKeyCode());
+
+            Toast.makeText(this,"KeyCode"+ event.getKeyCode(),Toast.LENGTH_SHORT).show();
+        }
+        return  super.dispatchKeyEvent(event);
     }
 }
