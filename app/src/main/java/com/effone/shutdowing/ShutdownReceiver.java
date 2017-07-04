@@ -17,7 +17,7 @@ public class ShutdownReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, final Intent intent) {
         Log.e(TAG, "Shutting Down..........................");
-        context.startService(new Intent(context, PowerButtonService.class));;
+        context.startService(new Intent(context, PowerButtonService.class));
     }
 
 }
