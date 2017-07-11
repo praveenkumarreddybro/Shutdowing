@@ -1,37 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools" package="com.effone.shutdowing">
-<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-<uses-permission android:name="android.permission.PREVENT_POWER_KEY" />
-<uses-permission android:name="android.permission.DEVICE_POWER" tools:ignore="ProtectedPermissions" />
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.effone.shutdowing">
 
-<application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name"
-    android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/AppTheme">
-    <activity android:name=".MainActivity" android:singleUser="true" android:clearTaskOnLaunch="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.PREVENT_POWER_KEY" />
+    <uses-permission
+        android:name="android.permission.DEVICE_POWER"
+        tools:ignore="ProtectedPermissions" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-    <activity android:name=".AlertActivity" />
-    <service android:name=".PowerButtonService" android:enabled="true" android:exported="true"></service>
-    <receiver android:name=".ShutdownReceiver">
-        <intent-filter>
-            <action android:name="android.intent.action.ACTION_SHUTDOWN" />
 
-        </intent-filter>
-    </receiver>
-    <receiver android:name="com.effone.shutdowing.BootRecever" android:exported="true"
-        android:enabled="true">
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:clearTaskOnLaunch="true"
+            android:singleUser="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <intent-filter>
-            <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AlertActivity" />
 
-        </intent-filter>
-    </receiver>
-</application>
+        <service
+            android:name=".PowerButtonService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <receiver android:name=".ShutdownReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.effone.shutdowing.BootRecever"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
 
 </manifest>

@@ -12,6 +12,7 @@ import java.util.logging.Logger;
  */
 
 public class ShutdownReceiver extends BroadcastReceiver {
+
     private static final String TAG = "ShutdownReceiver";
 
     @Override

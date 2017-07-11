@@ -136,7 +136,6 @@ public class PowerButtonService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         Intent broadcastIntent = new Intent(this,ShutdownReceiver.class );
         sendBroadcast(broadcastIntent);
     }
