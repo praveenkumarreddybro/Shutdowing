@@ -10,7 +10,7 @@
     <uses-permission
         android:name="android.permission.DEVICE_POWER"
         tools:ignore="ProtectedPermissions" />
-
+    <uses-permission android:name="android.permission.REORDER_TASKS" />i
 
     <application
         android:allowBackup="true"
@@ -21,27 +21,24 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:clearTaskOnLaunch="true"
             android:singleUser="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AlertActivity" />
-
+        <activity android:name=".AlertActivity"
+            android:excludeFromRecents="true"
+            android:noHistory="true"/>
         <service
             android:name=".PowerButtonService"
             android:enabled="true"
             android:exported="true"></service>
-
         <receiver android:name=".ShutdownReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name="com.effone.shutdowing.BootRecever"
             android:enabled="true"
@@ -51,5 +48,4 @@
             </intent-filter>
         </receiver>
     </application>
-
 </manifest>

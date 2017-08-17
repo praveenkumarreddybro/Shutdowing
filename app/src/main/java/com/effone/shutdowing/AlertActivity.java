@@ -42,10 +42,8 @@ import static com.effone.shutdowing.PowerButtonService.keyCode;
  */
 
 public class AlertActivity extends AppCompatActivity {
-
     Button btnOpenDialog;
     TextView textInfo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,25 +52,26 @@ public class AlertActivity extends AppCompatActivity {
             openDialog();
         }
     }
-
+    AlertDialog.Builder builder;
+    AlertDialog alertDialog;
     private void openDialog() {
         LayoutInflater inflater = LayoutInflater.from(this);
         View subView = inflater.inflate(R.layout.dialog_layout, null);
         final EditText subEditText = (EditText) subView.findViewById(R.id.dialogEditText);
         subEditText.setHint("9999");
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder = new AlertDialog.Builder(this);
         builder.setTitle("AlertDialog");
         //  builder.setMessage("AlertDialog Message");
         builder.setView(subView);
-        AlertDialog alertDialog = builder.create();
+
+
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(subEditText.getText().toString().trim().equals("9999")) {
                     i = 1;
                     getBaseContext().stopService(new Intent(getBaseContext(), PowerButtonService.class));
-                }else{
-                    i=0;
+                } else{
                     Toast.makeText(getApplicationContext(),"Wrong Password.....!" ,Toast.LENGTH_SHORT).show();
                 }
             }
@@ -82,11 +81,16 @@ public class AlertActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Toast.makeText(this, "Cancel", Toast.LENGTH_LONG).show();
-                i=0;
+                Toast.makeText(getApplicationContext(),"Cancel.....!" ,Toast.LENGTH_SHORT).show();
             }
         });
-        builder.show();
-        builder.setCancelable(false);
+        alertDialog = builder.create();
+        alertDialog.show();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        alertDialog.dismiss();
+    }
 }

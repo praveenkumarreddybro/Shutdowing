@@ -3,14 +3,17 @@ package com.effone.shutdowing;
 import android.app.AlertDialog;
 import android.app.Instrumentation;
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.IntDef;
@@ -34,6 +37,8 @@ import android.widget.Toast;
 
 public class PowerButtonService extends Service {
        public static KeyEvent keyCode;
+    static final int NOTIFICATION_ID = 543;
+
     private BroadcastReceiver mReceiver = null;
     LinearLayout mLinear;
     View mView;
@@ -47,6 +52,8 @@ public class PowerButtonService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        startServiceWithNotification();
         mLinear = new LinearLayout(getApplicationContext()) {
 
             //home or recent button
@@ -130,6 +137,27 @@ public class PowerButtonService extends Service {
         params.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
         wm.addView(mView, params);
 
+    }
+
+    private void startServiceWithNotification() {
+        Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
+      // A string containing the action name
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent contentPendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+
+        Notification notification = new NotificationCompat.Builder(this)
+                .setContentTitle(getResources().getString(R.string.app_name))
+                .setContentText("Sumanth")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
+                .setContentIntent(contentPendingIntent)
+                .setOngoing(true)
+//                .setDeleteIntent(contentPendingIntent)  // if needed
+                .build();
+        notification.flags = notification.flags | Notification.FLAG_NO_CLEAR;     // NO_CLEAR makes the notification stay when the user performs a "delete all" command
+        startForeground(NOTIFICATION_ID, notification);
     }
 
 

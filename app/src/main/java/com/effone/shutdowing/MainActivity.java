@@ -1,6 +1,8 @@
 package com.effone.shutdowing;
 
 import android.annotation.TargetApi;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 
     public boolean checkDrawOverlayPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -56,10 +59,17 @@ public class MainActivity extends AppCompatActivity {
                 || event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_DOWN
                 || event.getKeyCode() == KeyEvent.KEYCODE_CAMERA
                 || event.getKeyCode() == KeyEvent.KEYCODE_POWER) {
+
             Log.i("Key", "keycode " + event.getKeyCode());
 
             Toast.makeText(this,"KeyCode"+ event.getKeyCode(),Toast.LENGTH_SHORT).show();
+
         }
         return  super.dispatchKeyEvent(event);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
     }
 }
