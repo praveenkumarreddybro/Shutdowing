@@ -10,7 +10,6 @@
     <uses-permission
         android:name="android.permission.DEVICE_POWER"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.REORDER_TASKS" />i
 
     <application
         android:allowBackup="true"
